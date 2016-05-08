@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :load_answer, only: [ :edit, :update, :destroy ]
-  before_action :load_question, only: [:create, :destroy]
+  before_action :load_question, only: [ :create, :destroy ]
 
   def new
     @answer=Answer.new

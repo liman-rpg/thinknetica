@@ -17,7 +17,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, id: answer}
+    before { get :edit, id: answer }
 
     it 'assigns requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
@@ -30,7 +30,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:create_answer) {  post :create, question_id: question.id, answer: attributes_for(:answer) }
+      let(:create_answer) { post :create, question_id: question.id, answer: attributes_for(:answer) }
 
         it "save new answer for question in database" do
           expect { create_answer }.to change(question.answers, :count).by(1)
@@ -64,7 +64,7 @@ RSpec.describe AnswersController, type: :controller do
       end
 
       it "change answer attributes" do
-        patch :update, id: answer, answer: {body: "Mytest"}
+        patch :update, id: answer, answer: { body: "Mytest" }
         answer.reload
         expect(answer.body).to eq "Mytest"
       end
@@ -77,13 +77,13 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with invalid attributes' do
       it "does not change question attributes" do
-        patch :update, id: answer, answer: {body: nil}
+        patch :update, id: answer, answer: { body: nil }
         answer.reload
         expect(answer.body).to eq "MyText"
       end
 
       it "render edit view" do
-        patch :update, id: answer, answer: {body: nil}
+        patch :update, id: answer, answer: { body: nil }
         expect(response).to render_template :edit
       end
     end
