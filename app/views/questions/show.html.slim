@@ -1,1 +1,12 @@
-<p class="notice"><%= notice %> </p>
+p= @question.title
+p= @question.body
+
+== render 'answers/answer_body', answers: @question.answers
+== render 'answers/form'
+
+
+
+
+
+
+

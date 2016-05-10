@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :question do
-    title "MyString"
+    title 'MyString'
     body "MyText"
   end
 

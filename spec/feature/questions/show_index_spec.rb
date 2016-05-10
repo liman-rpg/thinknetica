@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Show questions_path page', %q{
-  Client can view a list of questions
+  The customer can view a list of questions
   The customer can choose an interesting question, and to link it
 } do
   given(:question) { create(:question) }

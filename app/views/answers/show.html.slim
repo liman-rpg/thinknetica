@@ -1,0 +1,7 @@
+strong 'Title :'
+ = @question.title
+ = @question.boby
+
+ -@question.answers.each do |answer|
+   = @answer.body
+ end
