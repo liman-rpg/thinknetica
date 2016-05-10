@@ -12,7 +12,7 @@ feature 'Create answer', %q{
     click_on 'Reply'
 
     expect(page).to have_content 'BodyTestAnswer'
+    expect(page).to have_content 'Ответ'
     expect(current_path).to eq question_path(question)
-
   end
 end

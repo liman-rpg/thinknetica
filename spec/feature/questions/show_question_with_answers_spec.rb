@@ -3,7 +3,6 @@ require 'rails_helper'
 feature 'Show question with answers', %q{
   The customer can view question & him answers
 } do
-
   given(:question) { create(:question) }
   given(:answer) { create(:answer, question: question) }
 

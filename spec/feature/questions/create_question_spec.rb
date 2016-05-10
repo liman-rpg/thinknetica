@@ -5,15 +5,14 @@ feature 'Create question', %q{
   I want to create question
 } do
   given (:question) { create(:question) }
-  scenario 'Can to create question' do
 
+  scenario 'Can to create question' do
     visit questions_path
     click_on 'Add question'
     visit new_question_path
     fill_in 'Title', with: 'TitleText'
     fill_in 'Body', with: 'BodyText'
     click_on 'Create'
-
 
     expect(page).to have_content 'Your question successfully created.'
     expect(page).to have_content 'TitleText'

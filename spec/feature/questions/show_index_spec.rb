@@ -5,8 +5,8 @@ feature 'Show questions_path page', %q{
   The customer can choose an interesting question, and to link it
 } do
   given(:question) { create(:question) }
-  scenario 'Show #index' do
 
+  scenario 'Show #index' do
     visit questions_path
 
     expect(page).to have_content 'Questions list :'
