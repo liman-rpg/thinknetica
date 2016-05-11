@@ -34,6 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim-rails'
 gem 'devise'
+gem 'bootstrap'
 
 group :test do
   gem 'shoulda-matchers'
