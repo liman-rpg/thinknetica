@@ -2,11 +2,14 @@ require "rails_helper"
 
 feature 'Create question', %q{
   In order to get answer from communiti
+  Authenticate user
   I want to create question
 } do
-  given (:question) { create(:question) }
+  given (:user) { create(:user) }
 
-  scenario 'Can to create question' do
+  scenario 'Authenticate user try create question' do
+    sign_in(user)
+
     visit questions_path
     click_on 'Add question'
     visit new_question_path
@@ -18,11 +21,16 @@ feature 'Create question', %q{
     expect(page).to have_content 'TitleText'
     expect(page).to have_content 'BodyText'
 
-    #Не пойму, если поставить visit question_path(question) и expect выше have_content выдает ошибку:
-    # Failure/Error: expect(page).to have_content 'Your question successfully created.'
-    #  expected to find text "Your question successfully created." in "MyStringMyTextСписок ответов пустОтвет"
-    visit question_path(question)
-    expect(current_path).to eq question_path(question)
+    # Как проверить что #show именно созданного экземпляра так и не понял, да и нужно ли вообще?
+    # Достаточно ли проверки сообщения от Devisе, что объект создан?
+  end
+
+  scenario 'Unauthenticate user try create question' do
+    visit questions_path
+    click_on 'Add question'
+
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(current_path).to eq new_user_session_path
   end
 end
 
