@@ -3,8 +3,9 @@ require 'rails_helper'
 feature 'Show question with answers', %q{
   The customer can view question & him answers
 } do
+  given(:user) { create(:user) }
   given(:question) { create(:question) }
-  given(:answer) { create(:answer, question: question) }
+  given(:answer) { create(:answer, question: question, user: user) }
 
   scenario 'Show question #show' do
     answer
