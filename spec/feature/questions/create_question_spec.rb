@@ -20,9 +20,6 @@ feature 'Create question', %q{
     expect(page).to have_content 'Your question successfully created.'
     expect(page).to have_content 'TitleText'
     expect(page).to have_content 'BodyText'
-
-    # Как проверить что #show именно созданного экземпляра так и не понял, да и нужно ли вообще?
-    # Достаточно ли проверки сообщения от Devisе, что объект создан?
   end
 
   scenario 'Unauthenticate user try create question' do

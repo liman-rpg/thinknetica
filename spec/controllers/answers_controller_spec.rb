@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+  let(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #new' do
     sign_in_user
@@ -19,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'GET #edit' do
     sign_in_user
-    before { get :edit, id: answer }
+    before { get :edit, id: answer, user_id: @user }
 
     it 'assigns requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
@@ -34,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      let(:create_answer) { post :create, question_id: question.id, answer: attributes_for(:answer) }
+      let(:create_answer) { post :create, question_id: question, user_id: user, answer: attributes_for(:answer) }
 
         it "save new answer for question in database" do
           expect { create_answer }.to change(question.answers, :count).by(1)
@@ -47,7 +48,7 @@ RSpec.describe AnswersController, type: :controller do
      end
 
     context 'with invalid attributes' do
-      let(:invalid_answer) { post :create, question_id: question.id, answer: attributes_for(:invalid_answer) }
+      let(:invalid_answer) { post :create, question_id: question, user_id: user, answer: attributes_for(:invalid_answer) }
 
       it "does not save answer for question in database" do
         expect { invalid_answer }.to_not change(question.answers, :count)
@@ -85,7 +86,7 @@ RSpec.describe AnswersController, type: :controller do
       it "does not change question attributes" do
         patch :update, id: answer, answer: { body: nil }
         answer.reload
-        expect(answer.body).to eq "MyText"
+        expect(answer.body).to eq answer[:body]
       end
 
       it "render edit view" do

@@ -3,23 +3,18 @@ require 'rails_helper'
 feature 'Show question with answers', %q{
   The customer can view question & him answers
 } do
-  given(:user) { create(:user) }
   given(:question) { create(:question) }
-  given(:answer) { create(:answer, question: question, user: user) }
+  given(:answers) { create_list(:answer, 2, question: question) }
 
   scenario 'Show question #show' do
-    answer
-
+    answers
     visit questions_path
-
-    expect(page).to have_content question.title
-
     click_on question.title
-    visit question_path(question)
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content question.title
     expect(page).to have_content question.body
-    expect(page).to have_content answer.body
+    expect(page).to have_content answers[0].body
+    expect(page).to have_content answers[1].body
   end
 end

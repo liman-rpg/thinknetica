@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
     let(:question) { create_list(:question, 2) }
@@ -60,22 +61,22 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(+1)
+        expect { post :create, question: attributes_for(:question), user_id: user }.to change(Question, :count).by(+1)
       end
 
       it 'redirects to show view' do
-        post :create, question: attributes_for(:question)
+        post :create, question: attributes_for(:question), user_id: user
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-       expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+       expect { post :create, question: attributes_for(:invalid_question), user_id: user }.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, question: attributes_for(:invalid_question)
+        post :create, question: attributes_for(:invalid_question), user_id: user
         expect(response).to render_template :new
       end
     end
@@ -107,7 +108,7 @@ RSpec.describe QuestionsController, type: :controller do
 
         it 'does not change question attributes' do
           question.reload
-          expect(question.title).to eq "MyString"
+          expect(question.title).to eq question[:title]
           expect(question.body).to eq "MyText"
         end
 
