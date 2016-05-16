@@ -60,23 +60,29 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      it 'saves the new question in the database' do
-        expect { post :create, question: attributes_for(:question), user_id: user }.to change(Question, :count).by(+1)
+      it 'save new question in database' do
+        expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(+1)
+      end
+      # Вопрос: нужно ли явно указывать? что .by(+1) именно с "+"?
+
+      it 'save new question for user in database' do
+        expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(+1)
       end
 
       it 'redirects to show view' do
-        post :create, question: attributes_for(:question), user_id: user
+        post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-       expect { post :create, question: attributes_for(:invalid_question), user_id: user }.to_not change(Question, :count)
+       expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+       expect { post :create, question: attributes_for(:invalid_question) }.to_not change(@user.questions, :count)
       end
 
       it 're-renders new view' do
-        post :create, question: attributes_for(:invalid_question), user_id: user
+        post :create, question: attributes_for(:invalid_question)
         expect(response).to render_template :new
       end
     end

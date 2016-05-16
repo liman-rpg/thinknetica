@@ -35,10 +35,14 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      let(:create_answer) { post :create, question_id: question, user_id: user, answer: attributes_for(:answer) }
+      let(:create_answer) { post :create, question_id: question, answer: attributes_for(:answer) }
 
         it "save new answer for question in database" do
-          expect { create_answer }.to change(question.answers, :count).by(1)
+          expect { create_answer }.to change(question.answers, :count).by(+1)
+        end
+
+        it "save new answer for user in database" do
+          expect { create_answer }.to change(@user.answers, :count).by(+1)
         end
 
         it "redirect to new view" do
