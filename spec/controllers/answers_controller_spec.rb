@@ -52,10 +52,14 @@ RSpec.describe AnswersController, type: :controller do
      end
 
     context 'with invalid attributes' do
-      let(:invalid_answer) { post :create, question_id: question, user_id: user, answer: attributes_for(:invalid_answer) }
+      let(:invalid_answer) { post :create, question_id: question, answer: attributes_for(:invalid_answer) }
 
       it "does not save answer for question in database" do
         expect { invalid_answer }.to_not change(question.answers, :count)
+      end
+
+      it "does not save answer for user in database" do
+        expect { invalid_answer }.to_not change(@user.answers, :count)
       end
 
       it "redirect to new view" do
