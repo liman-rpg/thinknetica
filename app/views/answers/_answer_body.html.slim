@@ -1,0 +1,9 @@
+- unless answers.empty?
+  - answers.each do |answer|
+    p= answer.user.email
+    p= answer.body
+    - if (current_user && current_user.author_of?(answer))
+      p= link_to 'Delete Answer', answer, method: :delete, data: { confirm: 'A you sure?' }
+- else
+    p Список ответов пуст
+

@@ -7,7 +7,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<div class="navbar-collapse collapse navbar-responsive-collapse">
+  <ul class="nav navbar-nav">
+    <li>
+      <% if user_signed_in? %>
+        <%= link_to "Выйти", destroy_user_session_path, method: :delete %>
+        <span>Email: <%= current_user.email %></span>
+      <% else %>
+        <%= link_to "Войти", new_user_session_path %>
+      <% end %>
+    </li>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 <%= yield %>
 
 </body>

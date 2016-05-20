@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer) }
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
+  let(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new, question_id: question }
 
     it 'assigns a new Answer to @answer' do
@@ -17,7 +19,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { get :edit, id: answer }
+    sign_in_user
+    before { get :edit, id: answer, user_id: @user }
 
     it 'assigns requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
@@ -29,11 +32,17 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
+
     context 'with valid attributes' do
-      let(:create_answer) { post :create, question_id: question.id, answer: attributes_for(:answer) }
+      let(:create_answer) { post :create, question_id: question, answer: attributes_for(:answer) }
 
         it "save new answer for question in database" do
-          expect { create_answer }.to change(question.answers, :count).by(1)
+          expect { create_answer }.to change(question.answers, :count).by(+1)
+        end
+
+        it "save new answer for user in database" do
+          expect { create_answer }.to change(@user.answers, :count).by(+1)
         end
 
         it "redirect to new view" do
@@ -43,10 +52,14 @@ RSpec.describe AnswersController, type: :controller do
      end
 
     context 'with invalid attributes' do
-      let(:invalid_answer) { post :create, question_id: question.id, answer: attributes_for(:invalid_answer) }
+      let(:invalid_answer) { post :create, question_id: question, answer: attributes_for(:invalid_answer) }
 
       it "does not save answer for question in database" do
         expect { invalid_answer }.to_not change(question.answers, :count)
+      end
+
+      it "does not save answer for user in database" do
+        expect { invalid_answer }.to_not change(@user.answers, :count)
       end
 
       it "redirect to new view" do
@@ -57,6 +70,8 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #update' do
+    sign_in_user
+
     context 'with valid attributes' do
       it "assign requested question to @question" do
         patch :update, id: answer, answer: attributes_for(:answer)
@@ -79,7 +94,7 @@ RSpec.describe AnswersController, type: :controller do
       it "does not change question attributes" do
         patch :update, id: answer, answer: { body: nil }
         answer.reload
-        expect(answer.body).to eq "MyText"
+        expect(answer.body).to eq answer[:body]
       end
 
       it "render edit view" do
@@ -91,7 +106,9 @@ RSpec.describe AnswersController, type: :controller do
 
 
   describe 'DELETE #destroy' do
+    sign_in_user
     let(:destroy_answer) { delete :destroy, question_id: answer.question_id, id: answer }
+
     it "delete answer from database" do
       answer
       expect { destroy_answer }.to change(Answer, :count).by(-1)

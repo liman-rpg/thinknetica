@@ -33,9 +33,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'slim-rails'
+gem 'devise'
+gem 'bootstrap'
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development, :test do
