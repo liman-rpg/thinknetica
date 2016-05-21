@@ -6,7 +6,8 @@ p= @question.body
       p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
 
 .answers
-  = render 'answers/answer_body', answers: @question.answers
+  = render 'answers'
+
 = render 'answers/form'
 
 p= link_to 'Back', questions_path
