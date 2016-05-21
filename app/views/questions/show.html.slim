@@ -5,8 +5,9 @@ p= @question.body
 - if (current_user && current_user.author_of?(@question))
       p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
 
-== render 'answers/answer_body', answers: @question.answers
-== render 'answers/form'
+.answers
+  = render 'answers/answer_body', answers: @question.answers
+= render 'answers/form'
 
 p= link_to 'Back', questions_path
 

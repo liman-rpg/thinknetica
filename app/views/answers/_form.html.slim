@@ -1,4 +1,4 @@
-= form_for [@question, @answer] do |f|
+= form_for [@question, @answer], remote: true do |f|
   - f.collection_select(:question_id, Question.all, :id, :title)
   p= f.label :body, 'Ответ'
   p= f.text_area :body

@@ -35,7 +35,7 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      let(:create_answer) { post :create, question_id: question, answer: attributes_for(:answer) }
+      let(:create_answer) { post :create, question_id: question, answer: attributes_for(:answer), format: :js }
 
         it "save new answer for question in database" do
           expect { create_answer }.to change(question.answers, :count).by(+1)
@@ -45,26 +45,26 @@ RSpec.describe AnswersController, type: :controller do
           expect { create_answer }.to change(@user.answers, :count).by(+1)
         end
 
-        it "redirect to new view" do
+        it "render template create.js" do
           create_answer
-          expect(response).to redirect_to question_path(question)
+          expect(response).to render_template :create
         end
      end
 
     context 'with invalid attributes' do
-      let(:invalid_answer) { post :create, question_id: question, answer: attributes_for(:invalid_answer) }
+      let(:create_invalid_answer) { post :create, question_id: question, answer: attributes_for(:invalid_answer), format: :js }
 
       it "does not save answer for question in database" do
-        expect { invalid_answer }.to_not change(question.answers, :count)
+        expect { create_invalid_answer }.to_not change(question.answers, :count)
       end
 
       it "does not save answer for user in database" do
-        expect { invalid_answer }.to_not change(@user.answers, :count)
+        expect { create_invalid_answer }.to_not change(@user.answers, :count)
       end
 
-      it "redirect to new view" do
-        invalid_answer
-        expect(response).to render_template :new
+      it "render template create.js" do
+        create_invalid_answer
+        expect(response).to render_template :create
       end
     end
   end
