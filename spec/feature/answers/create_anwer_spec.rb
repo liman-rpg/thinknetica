@@ -5,10 +5,10 @@ feature 'Create answer', %q{
   Authenticate user
   I want to create answer
 } do
-  given(:question) { create(:question) }
+  given!(:question) { create(:question) }
   given (:user) { create(:user) }
 
-  scenario 'Authenticate user try create answer' do
+  scenario 'Authenticate user try create answer', js: true do
     sign_in(user)
 
     visit question_path(question)

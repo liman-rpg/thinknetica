@@ -35,6 +35,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim-rails'
 gem 'devise'
 gem 'bootstrap'
+gem 'selenium-webdriver'
+gem 'database_cleaner'
 
 group :test do
   gem 'shoulda-matchers'
