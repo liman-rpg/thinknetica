@@ -28,4 +28,21 @@ feature 'Create answer', %q{
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
     expect(current_path).to eq new_user_session_path
   end
+
+  scenario 'Authenticate user try create nill answer', js: true do
+    sign_in(user)
+    visit question_path(question)
+    click_on 'Reply'
+
+    expect(page).to have_content "Body can't be blank"
+  end
+
+   scenario 'Authenticate user try create short answer (:body)', js: true do
+    sign_in(user)
+    visit question_path(question)
+    fill_in 'Ответ', with: 'SML'
+    click_on 'Reply'
+
+    expect(page).to have_content "Body is too short (minimum is 5 characters)"
+  end
 end
