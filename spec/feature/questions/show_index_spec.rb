@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'Show questions_path page', %q{
   The customer can view a list of questions
