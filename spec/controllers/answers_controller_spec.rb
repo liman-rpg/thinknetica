@@ -73,33 +73,33 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     context 'with valid attributes' do
-      it "assign requested question to @question" do
-        patch :update, id: answer, answer: attributes_for(:answer)
+      it "assign requested answer to @answer" do
+        patch :update, id: answer, question_id: question, answer: attributes_for(:answer), format: :js
         expect(assigns(:answer)).to eq answer
       end
 
       it "change answer attributes" do
-        patch :update, id: answer, answer: { body: "Mytest" }
+        patch :update, id: answer, question_id: question, answer: { body: "Mytest" }, format: :js
         answer.reload
         expect(answer.body).to eq "Mytest"
       end
 
-        it "redirect to answers question" do
-        patch :update, id: answer, answer: attributes_for(:answer)
-        expect(response).to redirect_to question_url(answer.question_id)
+      it "render template update" do
+        patch :update, id: answer, answer: attributes_for(:answer), format: :js
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
       it "does not change question attributes" do
-        patch :update, id: answer, answer: { body: nil }
+        patch :update, id: answer, question_id: question, answer: { body: nil }, format: :js
         answer.reload
-        expect(answer.body).to eq answer[:body]
+        expect(answer.body).to_not eq nil
       end
 
       it "render edit view" do
-        patch :update, id: answer, answer: { body: nil }
-        expect(response).to render_template :edit
+        patch :update, id: answer, question_id: question, answer: { body: nil }, format: :js
+        expect(response).to render_template :update
       end
     end
   end
