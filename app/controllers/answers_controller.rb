@@ -18,6 +18,7 @@ class AnswersController < ApplicationController
 
   def update
       @answer.update(answer_params) if current_user.id == @answer.user_id
+      @question = @answer.question
   end
 
   def destroy
