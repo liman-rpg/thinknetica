@@ -1,5 +1,6 @@
 = form_for [@question, @answer], remote: true do |f|
   - f.collection_select(:question_id, Question.all, :id, :title)
-  p= f.label :body, 'Ответ'
-  p= f.text_area :body
-  p= f.submit 'Reply'
+  = f.label :body, 'Ответ'
+  .answers-errors-form
+  = f.text_area :body
+  = f.submit 'Reply'

@@ -3,12 +3,14 @@ p= @question.title
 p Body:
 p= @question.body
 - if (current_user && current_user.author_of?(@question))
-      p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
+  p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
+
+
+.form-group
+  = render 'answers/form'
 
 .answers
   = render 'answers'
-
-= render 'answers/form'
 
 p= link_to 'Back', questions_path
 

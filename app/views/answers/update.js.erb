@@ -1,7 +1,7 @@
 <% if @answer.errors.present? %>
   <% @answer.errors.full_messages.each do |massage|%>
-    $('#answer_body').before('<%= j massage%>')
+   <p> $('.answers-errors').append("<%= j massage %>")</p>
   <% end %>
 <% else %>
-  $('.answers').append('<%= j render @answer %>');
+  $('.answers').html('<%= j render 'questions/answers' %>');
 <% end %>

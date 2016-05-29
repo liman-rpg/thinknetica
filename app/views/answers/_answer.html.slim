@@ -1,6 +1,17 @@
-.bool
-  p= answer.user.email
-  p= answer.body
-div
+
+p= answer.user.email
+p= answer.body
+
 - if current_user &&  current_user.author_of?(answer)
-  p= link_to "Delete Answer", answer, method: :delete, format: :js, data: { confirm: 'A you sure?' }
+  .btn-group
+    = link_to "Delete Answer", answer, method: :delete, format: :js, data: { confirm: 'A you sure?' }
+    |   |
+    = link_to 'Edit answer', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+
+  .form-group
+    p
+      = form_for  answer, remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Ответ'
+        .answers-errors
+        = f.text_area :body
+        = f.submit 'Reply'
