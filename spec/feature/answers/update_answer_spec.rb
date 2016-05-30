@@ -23,7 +23,7 @@ feature 'Answer edit', %q{
     end
 
     scenario 'try edit him answer', js: true do
-      click_on 'Edit'
+      click_on 'Edit Answer'
 
       within '.answers' do
         fill_in 'Ответ', with: 'First Edit'
@@ -34,7 +34,7 @@ feature 'Answer edit', %q{
         expect(page).to_not have_selector 'textarea'
       end
 
-      click_on 'Edit'
+      click_on 'Edit Answer'
 
       within '.answers' do
         fill_in 'Ответ', with: 'Second Edit'
