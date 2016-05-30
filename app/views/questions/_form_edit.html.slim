@@ -1,0 +1,7 @@
+= form_for @question, remote: true do |f|
+  p= f.label :title, 'Title'
+  p= f.text_field :title
+  .question-errors
+  p= f.label :body, 'Body'
+  p= f.text_area :body
+  p= f.submit 'Save'

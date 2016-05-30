@@ -1,10 +1,5 @@
-p Title:
-p= @question.title
-p Body:
-p= @question.body
-- if (current_user && current_user.author_of?(@question))
-  p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
-
+.question
+  = render 'question'
 
 .form-group
   = render 'answers/form'
