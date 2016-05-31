@@ -115,7 +115,7 @@ RSpec.describe AnswersController, type: :controller do
 
 
   describe 'DELETE #destroy' do
-    let(:destroy_answer) { delete :destroy, question_id: answer.question_id, id: answer }
+    let(:destroy_answer) { delete :destroy, question_id: answer.question_id, id: answer, format: :js }
 
     it "delete answer from database" do
       answer
@@ -124,7 +124,7 @@ RSpec.describe AnswersController, type: :controller do
 
     it "redirect to question show view" do
       destroy_answer
-      expect(response).to redirect_to question_url(answer.question_id)
+      expect(response).to render_template :destroy
     end
   end
 end

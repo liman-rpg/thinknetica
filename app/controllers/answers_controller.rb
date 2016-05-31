@@ -22,8 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy
-    redirect_to @answer.question, notice: "Answer was successfully destroyed."
+    @answer.destroy if current_user.id == @answer.user_id
   end
 
   private
