@@ -1,6 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
-  before_action :load_answer, only: [ :edit, :update, :destroy ]
+  before_action :load_answer, only: [ :edit, :update, :destroy, :set_best_answer ]
   before_action :load_question, only: [ :create ]
 
   def new
@@ -23,6 +23,14 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy if current_user.id == @answer.user_id
+  end
+
+  def set_best_answer
+    question = @answer.question
+    if current_user.id == question.user_id
+      Answer.set_as_best(@answer)
+      @answers = question.answers.order(best: :desc, created_at: :desc)
+    end
   end
 
   private
