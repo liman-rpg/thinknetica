@@ -5,9 +5,9 @@ feature 'Answer edit', %q{
   As Authenticate users
   i want edit answer
 } do
-  given(:user) { create(:user) }
+  given(:user)     { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:answer) { create(:answer, question: question, user: user) }
+  given(:answer)   { create(:answer, question: question, user: user) }
 
   describe 'Authenticate user' do
     before do
@@ -45,14 +45,15 @@ feature 'Answer edit', %q{
         expect(page).to_not have_selector 'textarea'
       end
     end
+  end
 
-    scenario "try edit other user's answer", js: true do
-      click_on 'Delete Answer' #отчищаем список answers
-      create(:answer, question: question)
+  scenario "Authenticate user try edit other user's answer", js: true do
+    sign_in(user)
+    create(:answer, question: question)
+    visit question_path(question)
 
-      within '.answers' do
-        expect(page).to_not have_link 'Edit'
-      end
+    within '.answers' do
+      expect(page).to_not have_link 'Edit'
     end
   end
 

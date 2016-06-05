@@ -3,5 +3,5 @@
    <p> $('.answers-errors').append("<%= j massage %>")</p>
   <% end %>
 <% else %>
-  $('.answers').html('<%= j render 'questions/answers' %>');
+  $('.answers').html('<%= j render 'answer', answer: @answer %>');
 <% end %>
