@@ -26,11 +26,8 @@ class AnswersController < ApplicationController
   end
 
   def set_best_answer
-    question = @answer.question
-    if current_user.id == question.user_id
-      Answer.set_as_best(@answer)
-      @answers = question.answers.order(best: :desc, created_at: :desc)
-    end
+    @answer.set_as_best! if @answer.question.user_id == current_user.id
+    @answers = @answer.question.answers.order(best: :desc, created_at: :desc) if @answer.best?
   end
 
   private
