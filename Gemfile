@@ -35,8 +35,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim-rails'
 gem 'devise'
 gem 'bootstrap'
-gem 'selenium-webdriver'
-gem 'database_cleaner'
+gem 'pry-byebug'
 
 group :test do
   gem 'shoulda-matchers'
@@ -49,7 +48,9 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
-  #gem 'rubocop'
+  gem 'rubocop'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
 end
 
 group :development do

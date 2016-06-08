@@ -7,7 +7,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer=Answer.new
+    @answer = Answer.new
+    @answers = @question.answers.order(best: :desc, created_at: :desc)
   end
 
   def new
@@ -28,12 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if
-      @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
+    @question.update(question_params) if current_user.id == @question.user_id
   end
 
   def destroy

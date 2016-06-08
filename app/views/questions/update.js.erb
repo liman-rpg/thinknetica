@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |massage|%>
+   <p> $('.question-errors').append("<%= j massage %>")</p>
+  <% end %>
+<% else %>
+  $('.question').html("<%= j render 'question' %>");
+<% end %>
+

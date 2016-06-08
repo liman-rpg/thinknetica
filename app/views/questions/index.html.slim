@@ -1,3 +1,6 @@
 p= link_to 'Add question', new_question_path
 h1 Questions list :
-== render @questions
+- @questions.each do |question|
+  p
+    | Author: #{question.user.email}
+  = link_to question.title, question_path(question)

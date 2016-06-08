@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'feature_helper'
 
 feature 'User sign_up', %q{
   In order to interact with community

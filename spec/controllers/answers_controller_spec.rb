@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: user) }
+  sign_in_user
+
+  let(:question) { create(:question, user_id: @user.id) }
+  let(:answer) { create(:answer, question_id: question.id, user_id: @user.id) }
 
   describe 'GET #new' do
-    sign_in_user
-    before { get :new, question_id: question }
+    before { get :new, question_id: question.id }
 
     it 'assigns a new Answer to @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -19,8 +19,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #edit' do
-    sign_in_user
-    before { get :edit, id: answer, user_id: @user }
+    before { get :edit, id: answer, user_id: @user.id }
 
     it 'assigns requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
@@ -32,13 +31,12 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #create' do
-    sign_in_user
-
     context 'with valid attributes' do
-      let(:create_answer) { post :create, question_id: question, answer: attributes_for(:answer), format: :js }
+      let(:create_answer) { post :create, question_id: question.id, answer: attributes_for(:answer), format: :js }
 
-        it "save new answer for question in database" do
+        it "save new answer in database" do
           expect { create_answer }.to change(question.answers, :count).by(+1)
+          expect(assigns(:answer).user_id).to eq @user.id
         end
 
         it "save new answer for user in database" do
@@ -70,44 +68,54 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'POST #update' do
-    sign_in_user
+    let(:answer) { create(:answer, question: question, user_id: @user.id) }
+    let(:update) { patch :update, id: answer, question_id: answer.question_id, answer: attributes_for(:answer), format: :js }
+    let(:update_body) { patch :update, id: answer, question_id: answer.question_id, answer: { body: "Mytest" }, format: :js }
 
     context 'with valid attributes' do
-      it "assign requested question to @question" do
-        patch :update, id: answer, answer: attributes_for(:answer)
+      it "assign requested answer to @answer" do
+        update
         expect(assigns(:answer)).to eq answer
       end
 
       it "change answer attributes" do
-        patch :update, id: answer, answer: { body: "Mytest" }
+        update_body
         answer.reload
         expect(answer.body).to eq "Mytest"
       end
 
-        it "redirect to answers question" do
-        patch :update, id: answer, answer: attributes_for(:answer)
-        expect(response).to redirect_to question_url(answer.question_id)
+      it "assigns the question" do
+        update
+        expect(assigns(:answer).question_id).to eq question.id
+      end
+
+      it "render template update" do
+        update
+        expect(response).to render_template :update
       end
     end
 
     context 'with invalid attributes' do
+      let(:invalid_attributes) { patch :update, id: answer, question_id: answer.question_id, answer: { body: nil }, format: :js }
+
+      before do
+        invalid_attributes
+      end
+
       it "does not change question attributes" do
-        patch :update, id: answer, answer: { body: nil }
         answer.reload
-        expect(answer.body).to eq answer[:body]
+        expect(answer.body).to_not eq nil
       end
 
       it "render edit view" do
-        patch :update, id: answer, answer: { body: nil }
-        expect(response).to render_template :edit
+        expect(response).to render_template :update
       end
     end
   end
 
 
   describe 'DELETE #destroy' do
-    sign_in_user
-    let(:destroy_answer) { delete :destroy, question_id: answer.question_id, id: answer }
+    let(:destroy_answer) { delete :destroy, question_id: answer.question_id, id: answer, format: :js }
 
     it "delete answer from database" do
       answer
@@ -116,7 +124,7 @@ RSpec.describe AnswersController, type: :controller do
 
     it "redirect to question show view" do
       destroy_answer
-      expect(response).to redirect_to question_url(answer.question_id)
+      expect(response).to render_template :destroy
     end
   end
 end

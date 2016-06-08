@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :answers , shallow: true
   end
 
+  patch "/answers/set_best_answer/:id", to: 'answers#set_best_answer', as: 'best_answer'
+
   root to: "questions#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
