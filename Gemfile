@@ -36,6 +36,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'bootstrap'
 gem 'pry-byebug'
+gem 'carrierwave'
 
 group :test do
   gem 'shoulda-matchers'
