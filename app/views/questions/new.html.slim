@@ -5,6 +5,12 @@
   p= f.text_area :body
   p= f.submit 'Create'
 
+  p Attachment:
+  p
+    = f.fields_for :attachments do |a|
+      = a.label :file
+      = a.file_field :file
+
 p= link_to 'Back', questions_path
 
 

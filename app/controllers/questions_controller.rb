@@ -13,6 +13,7 @@ class QuestionsController < ApplicationController
 
   def new
     @question=Question.new
+    @question.attachments.build
   end
 
   def edit
