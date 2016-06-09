@@ -37,6 +37,7 @@ gem 'devise'
 gem 'bootstrap'
 gem 'pry-byebug'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :test do
   gem 'shoulda-matchers'
