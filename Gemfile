@@ -38,6 +38,7 @@ gem 'bootstrap'
 gem 'pry-byebug'
 gem 'carrierwave'
 gem 'remotipart'
+gem "cocoon"
 
 group :test do
   gem 'shoulda-matchers'

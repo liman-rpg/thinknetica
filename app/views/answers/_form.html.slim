@@ -4,5 +4,8 @@
   = f.text_area :body
   p
     = f.fields_for :attachments do |attachment|
-      = render 'attachments/fields', a: attachment
+      = render 'attachments/fields', f: attachment
+      .links
+        = link_to_add_association 'Add file', f, :attachments,
+        partial: 'attachments/fields'
   = f.submit 'Reply'
