@@ -5,13 +5,14 @@
   p= f.text_area :body
   p= f.submit 'Create'
 
-  p Attachment:
-  p
-    = f.fields_for :attachments do |attachment|
-      = render 'attachments/fields', f: attachment
-      .links
-        = link_to_add_association 'Add file', f, :attachments,
-        partial: 'attachments/fields'
+  .attachments-form
+    p Attachment:
+    p
+      = f.fields_for :attachments do |attachment|
+        = render 'attachments/fields', f: attachment
+        .links
+          = link_to_add_association 'Add file', f, :attachments,
+          partial: 'attachments/fields'
 
 p= link_to 'Back', questions_path
 
