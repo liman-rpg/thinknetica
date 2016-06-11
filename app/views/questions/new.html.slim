@@ -7,9 +7,11 @@
 
   p Attachment:
   p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+    = f.fields_for :attachments do |attachment|
+      = render 'attachments/fields', f: attachment
+      .links
+        = link_to_add_association 'Add file', f, :attachments,
+        partial: 'attachments/fields'
 
 p= link_to 'Back', questions_path
 
