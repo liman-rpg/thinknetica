@@ -8,6 +8,10 @@ FactoryGirl.define do
     question
     user
     best false
+
+    trait :with_attachment do
+      after(:create) { |answer| create(:attachment, attachable: answer) }
+    end
   end
 
   factory :invalid_answer, class:"Answer" do

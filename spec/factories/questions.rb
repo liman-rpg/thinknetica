@@ -6,7 +6,7 @@ FactoryGirl.define do
     body "MyText"
     user
 
-    trait :with_attacment do
+    trait :with_attachment do
       after(:create) { |question| create(:attachment, attachable: question) }
     end
   end

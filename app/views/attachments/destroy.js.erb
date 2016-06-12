@@ -1,0 +1,6 @@
+<% if @attachment.destroyed? %>
+  $('.notice').append("<p >Your file was deleted </p>")
+  $( '<%= "#file-#{ @attachment.id }" %>' ).remove();
+<% else %>
+  $('.notice').append("<p >Your can't delete file </p>")
+<% end %>

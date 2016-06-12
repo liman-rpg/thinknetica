@@ -1,10 +1,12 @@
+div class="answer-form"
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Ответ'
   .answers-errors-form
   = f.text_area :body
   p
     = f.fields_for :attachments do |attachment|
-      = render 'attachments/fields', f: attachment
+      .form-fields
+        = render 'attachments/fields', f: attachment
       .links
         = link_to_add_association 'Add file', f, :attachments,
         partial: 'attachments/fields'

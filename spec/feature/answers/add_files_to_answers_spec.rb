@@ -16,15 +16,18 @@ feature 'Add files to answer', %q{
     scenario 'User can add files when ask answer', js: true do
       fill_in 'Ответ', with: 'BodyTestAnswer'
 
-      within all('.nested-fields').first do
-        attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-      end
-
+      all('input[type="file"]')[0].set "#{Rails.root}/spec/spec_helper.rb"
       click_on 'Add file'
+      all('input[type="file"]')[1].set "#{Rails.root}/spec/rails_helper.rb"
+      # within all('.nested-fields').first do
+      #   attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+      # end
 
-      within all('.nested-fields').last do
-        attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
-      end
+      # click_on 'Add file'
+
+      # within all('.nested-fields').last do
+      #   attach_file 'File', "#{Rails.root}/spec/rails_helper.rb"
+      # end
 
       click_on 'Reply'
 
