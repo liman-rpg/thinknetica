@@ -1,4 +1,4 @@
-require 'feature_helper'
+require 'rails_helper'
 
 feature 'Show question with answers', %q{
   The customer can view question & him answers

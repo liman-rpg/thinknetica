@@ -1,4 +1,4 @@
-require 'feature_helper'
+require 'rails_helper'
 
 feature 'Delete answer', %q{
   Authenticate user
