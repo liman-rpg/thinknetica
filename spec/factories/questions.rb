@@ -1,13 +1,14 @@
 FactoryGirl.define do
-  sequence :title do |n|
-    "MyTitle#{n}"
-  end
+  sequence(:title) { |n| "MyTitle#{n}" }
 
   factory :question do
     title
-    #title "MyTitle"
     body "MyText"
     user
+
+    trait :with_attachment do
+      after(:create) { |question| create(:attachment, attachable: question) }
+    end
   end
 
   factory :invalid_question, class:"Question" do

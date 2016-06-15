@@ -4,6 +4,10 @@ p
   | Title: #{@question.title}
 p Body:
 p= @question.body
+p Attachment:
+ul
+  - @question.attachments.each do |a|
+    =render 'attachments/attachment', attachment: a
 - if (current_user && current_user.author_of?(@question))
   p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
   p= link_to 'Edit Question', '', class: 'edit-question-link'

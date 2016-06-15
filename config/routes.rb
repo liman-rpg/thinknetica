@@ -4,6 +4,8 @@ Rails.application.routes.draw do
     resources :answers , shallow: true
   end
 
+  resources :attachments, only: :destroy
+
   patch "/answers/set_best_answer/:id", to: 'answers#set_best_answer', as: 'best_answer'
 
   root to: "questions#index"
