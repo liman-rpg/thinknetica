@@ -1,4 +1,4 @@
-require 'feature_helper'
+require 'rails_helper'
 
 feature 'Best Answer', %q{
   In order to choise the best answer

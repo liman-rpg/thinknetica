@@ -1,4 +1,4 @@
-require 'feature_helper'
+require 'rails_helper'
 
 feature "Edit question", %q{
   n order to get question from communiti

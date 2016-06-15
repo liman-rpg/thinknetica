@@ -1,4 +1,4 @@
-require 'feature_helper'
+require 'rails_helper'
 
 feature 'Add files to answer', %q{
   In order to illustrate my answer
