@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 shared_examples_for "votable" do
-  let(:model) { described_class }
+  let(:model)   { described_class }
   let(:votable) { create(model.to_s.underscore.to_sym) }
-  let(:user) { create(:user) }
+  let(:user)    { create(:user) }
 
   describe '#vote_up' do
     it 'create new vote with score = 1' do
