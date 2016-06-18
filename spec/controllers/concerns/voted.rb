@@ -7,7 +7,7 @@ shared_examples_for "voted" do
 
   describe 'POST #vote_up' do
     sign_in_user
-    before { post :vote_up, id: votable }
+    before { post :vote_up, id: votable, status: true }
 
     context 'Not author try voting' do
       it 'Score value +1' do
@@ -15,7 +15,7 @@ shared_examples_for "voted" do
       end
 
       it "render json with ratable id, score and true status" do
-        expect(response.body).to eq ({ id: votable.id, score: votable.total }).to_json
+        expect(response.body).to eq ({ id: votable.id, score: votable.total, status: true }).to_json
       end
     end
 
@@ -35,7 +35,7 @@ shared_examples_for "voted" do
 
   describe '#vote_down' do
     sign_in_user
-    before { post :vote_down, id: votable }
+    before { post :vote_down, id: votable, status: true }
 
     context 'Not author try voting' do
       it 'Score value -1' do
@@ -43,7 +43,7 @@ shared_examples_for "voted" do
       end
 
       it "render json with ratable id, score and true status" do
-        expect(response.body).to eq ({ id: votable.id, score: votable.total }).to_json
+        expect(response.body).to eq ({ id: votable.id, score: votable.total, status: true }).to_json
       end
     end
 
@@ -63,7 +63,7 @@ shared_examples_for "voted" do
 
   describe '#vote_cancel'
     sign_in_user
-    before { post :vote_cancel, id: votable }
+    before { post :vote_cancel, id: votable, status: false }
 
     context 'Not author try reset' do
       it 'Score value 0' do
@@ -71,7 +71,7 @@ shared_examples_for "voted" do
       end
 
       it "render json with ratable id, score and true status" do
-        expect(response.body).to eq ({ id: votable.id, score: votable.total }).to_json
+        expect(response.body).to eq ({ id: votable.id, score: votable.total, status: false }).to_json
       end
     end
 

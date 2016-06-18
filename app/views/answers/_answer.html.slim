@@ -2,6 +2,8 @@ div class="answer" id="answer-id-#{ answer.id }"
   p= answer.user.email
   p= answer.body
 
+  p= render 'votes/votes', votable: answer
+
   .attachments-form
     p Attachments:
     ul

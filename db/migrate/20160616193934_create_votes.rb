@@ -1,7 +1,7 @@
 class CreateVotes < ActiveRecord::Migration
   def change
     create_table :votes do |t|
-      t.integer :score
+      t.integer :score , default: 0
       t.references :votable, polymorphic: true
       t.references :user, foreign_key: true
 
