@@ -14,4 +14,6 @@ RSpec.describe Answer, type: :model do
   it { should have_db_column(:best).of_type(:boolean).with_options(default: false) }
 
   it { should accept_nested_attributes_for :attachments }
+
+  it_behaves_like 'votable'
 end
