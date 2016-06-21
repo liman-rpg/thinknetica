@@ -4,6 +4,7 @@ RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should belong_to(:user) }
   it { should have_many(:attachments).dependent(:destroy) }
+  it { should have_many(:votes).dependent(:destroy) }
 
   it { should validate_presence_of(:question_id) }
   it { should validate_presence_of(:user_id) }
@@ -13,4 +14,6 @@ RSpec.describe Answer, type: :model do
   it { should have_db_column(:best).of_type(:boolean).with_options(default: false) }
 
   it { should accept_nested_attributes_for :attachments }
+
+  it_behaves_like 'votable'
 end

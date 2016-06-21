@@ -1,0 +1,17 @@
+| Votes:
+.votes_score
+  = votable.total
+.votes_link
+  - if current_user && current_user.id != votable.user_id
+    -unless votable.votes.exists?(user: current_user)
+      = link_to 'Up', polymorphic_path(votable, action: :vote_up), remote: true, method: :post, class: 'vote_link_up'
+      |   |
+      = link_to 'Down', polymorphic_path(votable, action: :vote_down), remote: true, method: :post, class: 'vote_link_down'
+      = link_to 'Reset', polymorphic_path(votable, action: :vote_cancel), remote: true, method: :post, class: 'vote_link_cancel', style:'display:none'
+    - else
+      = link_to 'Up', polymorphic_path(votable, action: :vote_up), remote: true, method: :post, class: 'vote_link_up', style:'display:none'
+      |   |
+      = link_to 'Down', polymorphic_path(votable, action: :vote_down), remote: true, method: :post, class: 'vote_link_down', style:'display:none'
+      = link_to 'Reset', polymorphic_path(votable, action: :vote_cancel), remote: true, method: :post, class: 'vote_link_cancel'
+
+

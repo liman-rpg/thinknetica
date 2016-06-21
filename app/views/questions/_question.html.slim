@@ -4,6 +4,9 @@ p
   | Title: #{@question.title}
 p Body:
 p= @question.body
+
+p= render 'votes/votes', votable: @question
+
 p Attachment:
 ul
   - @question.attachments.each do |a|

@@ -9,6 +9,18 @@ ready = ->
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
 
+  $('.answers .votes_link a').bind 'ajax:success', (e, data, status, xhr) ->
+    response = $.parseJSON(xhr.responseText)
+    $('.answers .votes_score').html(response.score)
+    if response.status == true
+      $('.answers .votes_link a.vote_link_up').hide()
+      $('.answers .votes_link a.vote_link_down').hide()
+      $('.answers .votes_link a.vote_link_cancel').show()
+    else
+      $('.answers .votes_link a.vote_link_up').show()
+      $('.answers .votes_link a.vote_link_down').show()
+      $('.answers .votes_link a.vote_link_cancel').hide()
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
 $(document).on('page:update', ready)

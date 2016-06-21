@@ -1,10 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  it_behaves_like 'voted'
+
   sign_in_user
 
   let(:question) { create(:question, user_id: @user.id) }
-  let(:answer) { create(:answer, question_id: question.id, user_id: @user.id) }
+  let(:answer)   { create(:answer, question_id: question.id, user_id: @user.id) }
 
   describe 'GET #new' do
     before { get :new, question_id: question.id }
