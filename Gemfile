@@ -41,6 +41,8 @@ gem 'remotipart'
 gem "cocoon"
 gem "private_pub"
 gem "thin"
+gem 'responders'
+gem 'skim'
 
 group :test do
   gem 'shoulda-matchers'
