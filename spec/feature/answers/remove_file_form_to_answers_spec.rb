@@ -21,7 +21,7 @@ feature 'Add files to answer', %q{
         click_link 'Remove form', "#{Rails.root}/spec/spec_helper.rb"
       end
 
-      within '.attachments-form' do
+      within '.attachments-answer' do
         expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
       end
     end

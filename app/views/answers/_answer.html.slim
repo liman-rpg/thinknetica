@@ -4,7 +4,7 @@ div class="answer" id="answer-id-#{ answer.id }"
 
   p= render 'votes/votes', votable: answer
 
-  .attachments-form
+  .attachments-answer
     p Attachments:
     ul
       - answer.attachments.each do |a|
