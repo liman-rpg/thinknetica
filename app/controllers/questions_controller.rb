@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [ :show, :edit, :update, :destroy ]
 
+  after_action :publish_question, only: :create
+
   respond_to :js, only: :update
 
   def index
@@ -38,6 +40,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def publish_question
+    PrivatePub.publish_to "/questions", question: @question.to_json if @question.valid?
+  end
 
   def load_question
     @question=Question.find(params[:id])

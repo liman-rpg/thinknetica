@@ -68,6 +68,11 @@ RSpec.describe QuestionsController, type: :controller do
       end
       # Вопрос: нужно ли явно указывать? что .by(+1) именно с "+"?
 
+      it 'Create @question.to_json after create question ' do
+        expect(PrivatePub).to receive(:publish_to).with('/questions', anything)
+        create_valid_question
+      end
+
       it 'save new question for user in database' do
         expect { post :create, question: attributes_for(:question) }.to change(@user.questions, :count).by(+1)
       end
@@ -89,6 +94,11 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'does not save the question for user in database' do
        expect { post :create, question: attributes_for(:invalid_question) }.to_not change(@user.questions, :count)
+      end
+
+      it "Don't Create @question.to_json after create question" do
+        expect(PrivatePub).to_not receive(:publish_to).with('/questions', anything)
+        create_invalid_question
       end
 
       it 're-renders new view' do

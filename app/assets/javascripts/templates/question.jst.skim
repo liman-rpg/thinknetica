@@ -1,0 +1,4 @@
+a href="/questions/#{ @question.id }" #{ @question.title }
+
+
+

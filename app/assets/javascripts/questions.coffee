@@ -20,6 +20,9 @@ ready = ->
       $('.question .votes_link a.vote_link_down').show()
       $('.question .votes_link a.vote_link_cancel').hide()
 
+  PrivatePub.subscribe "/questions", (data, channel) ->
+    question = $.parseJSON(data['question'])
+    $('.questions-list').append(JST["templates/question"]({question: question}))
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
