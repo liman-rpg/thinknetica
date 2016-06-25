@@ -2,19 +2,5 @@
   <% @comment.errors.full_messages.each do |massage|%>
     $('.comments-errors-form').append('<%= j massage %>');
   <% end %>
-<% else %>
-  <% if @comment.commentable_type == 'Question' %>
-    <% publish_to "/comments" do %>
-        $('.comments-question .comments-question-list').append('<%= j render 'comment', comment: @comment %>');
-    <% end %>
-    $('.comments-question #comment_body').val('');
-    $('.comments-errors-form').empty();
-  <% elsif @comment.commentable_type == 'Answer' %>
-    <% publish_to "/comments" do %>
-        $('.comments-answer .comments-answer-list').append('<%= j render 'comment', comment: @comment %>');
-    <% end %>
-    $('.comments-answer #comment_body').val('');
-    $('.comments-errors-form').empty();
-  <% end %>
 <% end %>
 

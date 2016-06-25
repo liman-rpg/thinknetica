@@ -15,10 +15,10 @@ p= render 'votes/votes', votable: @question
 
 .comments-question data= { id: "#{@question.id}" }
   | Comments:
-  div class='question_#{@question.id}'
+  div class='question_#{ @question.id }'
     .comments-question-list
-      = render @question.comments.order(created_at: :desc)
-    = render 'comments/form', commentable: @question
+      = render @question.comments.order(created_at: :asc)
+  = render 'comments/form', commentable: @question
 
 
 - if (current_user && current_user.author_of?(@question))

@@ -2,6 +2,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_commentable
 
+  after_action :render_pub, only: :create
+
   respond_to :js
 
   def create
@@ -22,6 +24,10 @@ class CommentsController < ApplicationController
 
   def load_commentable
     @commentable = set_commentable.classify.constantize.find(params["#{set_commentable}_id"])
+  end
+
+  def render_pub
+    PrivatePub.publish_to('/comments', comment: @comment.to_json) if @comment.persisted?
   end
 
   def comment_params
