@@ -31,7 +31,7 @@ feature "Edit question", %q{
         expect(page).to have_content 'First edit Body'
         expect(page).to_not have_content question.body
         expect(page).to_not have_content question.title
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#question_body'
 
         click_on 'Edit Question'
         fill_in 'Title', with: 'Second edit Title'
@@ -42,7 +42,7 @@ feature "Edit question", %q{
         expect(page).to have_content 'Second edit Body'
         expect(page).to_not have_content 'First edit Title'
         expect(page).to_not have_content 'First edit Body'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#question_body'
       end
     end
 

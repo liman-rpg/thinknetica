@@ -31,7 +31,7 @@ feature 'Answer edit', %q{
 
         expect(page).to_not have_content answer.body
         expect(page).to have_content 'First Edit'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#answer_body'
       end
 
       click_on 'Edit Answer'
@@ -42,7 +42,7 @@ feature 'Answer edit', %q{
 
         expect(page).to_not have_content 'First Edit'
         expect(page).to have_content 'Second Edit'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to_not have_selector 'textarea#answer_body'
       end
     end
   end

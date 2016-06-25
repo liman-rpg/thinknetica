@@ -10,6 +10,13 @@ div class="answer" id="answer-id-#{ answer.id }"
       - answer.attachments.each do |a|
         =render 'attachments/attachment', attachment: a
 
+  .comments-answer data= { id: "#{@answer.id}" }
+    | Comments:
+    div class='answer_#{ answer.id}'
+      .comments-answer-list
+        = render answer.comments.order(created_at: :desc)
+      = render 'comments/form', commentable: answer
+
   - if current_user && current_user.author_of?(answer) && !answer.best
     = link_to 'Set Best Answer', best_answer_path(answer), method: :patch, remote: true
   - if answer.best

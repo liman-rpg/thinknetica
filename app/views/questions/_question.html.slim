@@ -13,9 +13,19 @@ p= render 'votes/votes', votable: @question
     - @question.attachments.each do |a|
       = render 'attachments/attachment', attachment: a
 
+.comments-question data= { id: "#{@question.id}" }
+  | Comments:
+  div class='question_#{@question.id}'
+    .comments-question-list
+      = render @question.comments.order(created_at: :desc)
+    = render 'comments/form', commentable: @question
+
+
 - if (current_user && current_user.author_of?(@question))
   p= link_to 'Delete Question', @question, method: :delete, data: { confirm: 'A you sure?' }
   p= link_to 'Edit Question', '', class: 'edit-question-link'
   .form-group
     p
       = render 'form_edit'
+
+= subscribe_to "/comments"

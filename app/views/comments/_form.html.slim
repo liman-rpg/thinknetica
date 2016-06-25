@@ -1,0 +1,4 @@
+.comments-errors-form
+= form_for [ commentable, Comment.new ], remote: true do |f|
+    = f.text_area :body
+    = f.submit 'Submit'
