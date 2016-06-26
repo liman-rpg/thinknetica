@@ -4,7 +4,21 @@
   <% end %>
 <% else %>
   <% publish_to "/questions/#{@question.id}/answers" do %>
-    $('.answers').html('<%= j render 'answer', answer: @answer %>');
+      var user = gon.current_user_id
+      console.log('user: ' + user);
+      var user_sign_in = gon.user_signed_in
+      console.log('sign_in: ' + user_sign_in);
+      $('.answers').prepend('<%= j render 'answer_pub', answer: @answer %>');
+      var answer_user = <%= @answer.user_id %>
+      if ( user == undefined) {
+        $('.answers').find('.panel-links').hide();
+      } else if (user_sign_in && user == answer_user ) {
+        $('.answers').find('.btn-group').show();
+        $('.answers').find('.set-best-link').hide();
+      } else if (user_sign_in && user != answer_user ) {
+        $('.answers').find('.btn-group').hide();
+        $('.answers').find('.set-best-link').show();
+      }
   <% end %>
   $('#answer_body').val('');
   $('.answers-errors-form').empty();
