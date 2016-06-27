@@ -305,7 +305,7 @@ DEPENDENCIES
   pry-byebug
   rails (= 4.2.6)
   remotipart
-  responders
+  responders (~> 2.0)
   rspec-rails
   rubocop
   sass-rails (~> 5.0)
