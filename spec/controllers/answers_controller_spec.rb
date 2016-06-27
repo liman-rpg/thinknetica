@@ -47,7 +47,9 @@ RSpec.describe AnswersController, type: :controller do
 
         it "render template create.js" do
           create_answer
+
           expect(response).to render_template :create
+          expect(flash[:notice]).to be_present
         end
      end
 

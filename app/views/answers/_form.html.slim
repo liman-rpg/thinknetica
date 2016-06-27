@@ -4,7 +4,7 @@ div class="answer-form"
   .answers-errors-form
   = f.text_area :body
   p
-    = f.fields_for :attachments do |attachment|
+    = f.fields_for :attachments, @answer.attachments.build do |attachment|
       .form-fields
         = render 'attachments/fields', f: attachment
       .links

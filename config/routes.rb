@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :votable do
-    resources :answers , shallow: true , concerns: :votable
+    resources :comments, only: :create, defaults: { commentable: 'questions' }
+    resources :answers , shallow: true , concerns: :votable do
+      resources :comments, only: :create, defaults: { commentable: 'answers' }
+    end
   end
 
   resources :attachments, only: :destroy

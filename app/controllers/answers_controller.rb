@@ -5,31 +5,30 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [ :edit, :update, :destroy, :set_best_answer ]
   before_action :load_question, only: [ :create ]
 
-  def new
-    @answer=Answer.new
-  end
+  respond_to :js
 
-  def edit
+  def new
+    respond_with(@answer = Answer.new)
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user=current_user
-    @answer.save
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
 
   def update
-      @answer.update(answer_params) if current_user.id == @answer.user_id
-      @question = @answer.question
+    @answer.update(answer_params) if current_user.id == @answer.user_id
+    respond_with @answer
   end
 
   def destroy
     @answer.destroy if current_user.id == @answer.user_id
+    respond_with @answer
   end
 
   def set_best_answer
     @answer.set_as_best! if @answer.question.user_id == current_user.id
     @answers = @answer.question.answers.order(best: :desc, created_at: :desc) if @answer.best?
+    respond_with @answer
   end
 
   private

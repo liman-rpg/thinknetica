@@ -39,6 +39,11 @@ gem 'pry-byebug'
 gem 'carrierwave'
 gem 'remotipart'
 gem "cocoon"
+gem "private_pub"
+gem "thin"
+gem 'responders'
+gem 'skim'
+gem 'gon'
 
 group :test do
   gem 'shoulda-matchers'

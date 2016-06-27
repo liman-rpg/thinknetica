@@ -14,13 +14,11 @@ feature 'Remove files to question', %q{
       within all('.nested-fields').first do
         attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
 
-        expect(page).to_not have_content 'spec_helper.rb'
-
         click_link 'Remove form', "#{Rails.root}/spec/spec_helper.rb"
       end
 
-      within '.attachments-form' do
-        expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+      within '.attachments-question-form' do
+        expect(page).to_not have_selector 'textarea'
       end
     end
   end

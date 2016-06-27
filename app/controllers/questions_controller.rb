@@ -4,44 +4,46 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [ :show, :edit, :update, :destroy ]
 
+  after_action :publish_question, only: :create
+
+  respond_to :js, only: :update
+
   def index
-    @questions=Question.all
+    respond_with(@questions=Question.all)
   end
 
   def show
     @answer = Answer.new
-    @answer.attachments.build
     @answers = @question.answers.order(best: :desc, created_at: :desc)
+    respond_with(@question)
   end
 
   def new
-    @question=Question.new
-    @question.attachments.build
+    respond_with(@question=Question.new)
   end
 
   def edit
   end
 
   def create
-    @question=current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question , notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    respond_with(@question = Question.create(question_params.merge(user_id: current_user.id)))
   end
 
   def update
     @question.update(question_params) if current_user.id == @question.user_id
+    respond_with @question
   end
 
   def destroy
     @question.destroy
-    redirect_to questions_path, notice: 'Question was successfully destroyed.'
+    respond_with @question
   end
 
   private
+
+  def publish_question
+    PrivatePub.publish_to "/questions", question: @question.to_json if @question.valid?
+  end
 
   def load_question
     @question=Question.find(params[:id])
