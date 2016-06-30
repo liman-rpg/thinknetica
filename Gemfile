@@ -44,6 +44,8 @@ gem "thin"
 gem 'responders', '~> 2.0'
 gem 'skim'
 gem 'gon'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :test do
   gem 'shoulda-matchers'
