@@ -41,7 +41,7 @@ gem 'remotipart'
 gem "cocoon"
 gem "private_pub"
 gem "thin"
-gem 'responders'
+gem 'responders', '~> 2.0'
 gem 'skim'
 gem 'gon'
 
