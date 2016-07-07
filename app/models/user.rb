@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :authorizations
+  has_many :authorizations, dependent: :destroy
 
   def author_of?(object)
     id==object.user_id
@@ -16,15 +16,17 @@ class User < ActiveRecord::Base
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
     return authorization.user if authorization
 
-    email = auth.info[:email]
+    auth.info.try(:email) ? (email = auth.info[:email]) : (return false)
     user = User.where(email: email).first
+
     if user
       user.authorizations.create(provider: auth.provider, uid: auth.uid)
     else
       password = Devise.friendly_token[0, 20]
-      user = User.create!(email: email, password: password, password_confirmation: password)
-      user.authorizations.create(provider: auth.provider, uid: auth.uid)
+      user = User.new(email: email, password: password, password_confirmation: password)
+      user.save ? (user.authorizations.create(provider: auth.provider, uid: auth.uid)) : (return false)
     end
+
     user
   end
 end

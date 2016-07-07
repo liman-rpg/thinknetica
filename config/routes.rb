@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
+  post "authorizations/save_email", as: 'save_email_for_auth'
+  get "authorizations/confirm_email", as: 'confirm_email_for_auth'
+
   concern :votable do
     member do
       post :vote_up
