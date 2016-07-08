@@ -47,6 +47,7 @@ gem 'gon'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'capybara-email'
 
 group :test do
   gem 'shoulda-matchers'
