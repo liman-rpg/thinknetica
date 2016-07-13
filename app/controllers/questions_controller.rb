@@ -8,6 +8,8 @@ class QuestionsController < ApplicationController
 
   respond_to :js, only: :update
 
+  authorize_resource
+
   def index
     respond_with(@questions=Question.all)
   end
@@ -22,15 +24,12 @@ class QuestionsController < ApplicationController
     respond_with(@question=Question.new)
   end
 
-  def edit
-  end
-
   def create
     respond_with(@question = Question.create(question_params.merge(user_id: current_user.id)))
   end
 
   def update
-    @question.update(question_params) if current_user.id == @question.user_id
+    @question.update(question_params)
     respond_with @question
   end
 
