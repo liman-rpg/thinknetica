@@ -44,6 +44,10 @@ gem "thin"
 gem 'responders', '~> 2.0'
 gem 'skim'
 gem 'gon'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'capybara-email'
 
 group :test do
   gem 'shoulda-matchers'
@@ -59,6 +63,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem "letter_opener"
 end
 
 group :development do

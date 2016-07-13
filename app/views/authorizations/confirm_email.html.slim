@@ -1,0 +1,7 @@
+h2 Confirm you email:
+
+= form_tag save_email_for_auth_path, method: "post" do
+  = label_tag :email, "Enter your email"
+  br
+  = text_field_tag :email
+  = submit_tag "Confirm"
