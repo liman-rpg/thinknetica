@@ -2,7 +2,7 @@
 .votes_score
   = votable.total
 .votes_link
-  - if current_user && current_user.id != votable.user_id
+  - if can?(:vote, votable)
     -unless votable.votes.exists?(user: current_user)
       = link_to 'Up', polymorphic_path(votable, action: :vote_up), remote: true, method: :post, class: 'vote_link_up'
       |   |
