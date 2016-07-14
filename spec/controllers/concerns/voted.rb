@@ -26,9 +26,8 @@ shared_examples_for "voted" do
         expect(votable.votes.count).to eq 0
       end
 
-      it 'render nothing' do
-        expect(response.body).to eq ""
-        expect(response.status).to eq 403
+      it 'redirect_to root_url' do
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -54,9 +53,8 @@ shared_examples_for "voted" do
         expect(votable.votes.count).to eq 0
       end
 
-      it 'render nothing' do
-        expect(response.body).to eq ""
-        expect(response.status).to eq 403
+      it 'redirect_to root_url' do
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -82,9 +80,8 @@ shared_examples_for "voted" do
         expect(votable.votes.count).to eq 0
       end
 
-      it 'render nothing' do
-        expect(response.body).to eq ""
-        expect(response.status).to eq 403
+      it 'redirect_to root_url' do
+        expect(response).to redirect_to root_url
       end
     end
 

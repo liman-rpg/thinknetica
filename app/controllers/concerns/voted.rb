@@ -3,7 +3,6 @@ module Voted
 
   included do
     before_action :get_votable, only: [ :vote_up, :vote_down, :vote_cancel ]
-    before_action :not_owner, only: [ :vote_up, :vote_down, :vote_cancel ]
   end
 
   def vote_up
@@ -33,9 +32,4 @@ module Voted
   def model_klass
     controller_name.classify.constantize
   end
-
-  def not_owner
-    render nothing: true, status: 403 if @votable.user_id == current_user.id
-  end
-
 end

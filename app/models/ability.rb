@@ -29,7 +29,7 @@ class Ability
     #Answer + Question + Comment
     can :create, [ Question, Answer, Comment ]
     can :modify, [ Question, Answer ], user: user
-    can :vote,   [ Question, Answer ] { |votable| user != votable.user}
+    can :vote,   [ Question, Answer ] { |votable| votable.user_id != user.id }
 
     #Question
     can :read, Question

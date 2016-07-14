@@ -3,7 +3,7 @@
   = votable.total
 .votes_link
   - if can?(:vote, votable)
-    -unless votable.votes.exists?(user: current_user)
+    - unless votable.votes.exists?(user: current_user)
       = link_to 'Up', polymorphic_path(votable, action: :vote_up), remote: true, method: :post, class: 'vote_link_up'
       |   |
       = link_to 'Down', polymorphic_path(votable, action: :vote_down), remote: true, method: :post, class: 'vote_link_down'
