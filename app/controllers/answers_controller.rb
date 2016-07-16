@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
 
   respond_to :js
 
+  authorize_resource
+
   def new
     respond_with(@answer = Answer.new)
   end
@@ -16,12 +18,12 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params) if current_user.id == @answer.user_id
+    @answer.update(answer_params)
     respond_with @answer
   end
 
   def destroy
-    @answer.destroy if current_user.id == @answer.user_id
+    @answer.destroy
     respond_with @answer
   end
 

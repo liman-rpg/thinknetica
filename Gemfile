@@ -48,6 +48,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'capybara-email'
+gem "cancancan"
 
 group :test do
   gem 'shoulda-matchers'
