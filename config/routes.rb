@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   post "authorizations/save_email", as: 'save_email_for_auth'
@@ -22,6 +23,14 @@ Rails.application.routes.draw do
   resources :attachments, only: :destroy
 
   patch "/answers/set_best_answer/:id", to: 'answers#set_best_answer', as: 'best_answer'
+
+  namespace :api do
+    namespace :v1 do
+      resources :profiles do
+        get :me, on: :collection
+      end
+    end
+  end
 
   root to: "questions#index"
   # The priority is based upon order of creation: first created -> highest priority.
