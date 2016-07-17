@@ -50,6 +50,7 @@ gem 'omniauth-twitter'
 gem 'capybara-email'
 gem "cancancan"
 gem 'doorkeeper'
+gem 'active_model_serializers', '~> 0.10.0'
 
 group :test do
   gem 'shoulda-matchers'
