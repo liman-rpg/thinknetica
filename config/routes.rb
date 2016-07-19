@@ -30,7 +30,7 @@ Rails.application.routes.draw do
         get :me, on: :collection
         get :all, on: :collection
       end
-      resources :questions
+      resources :questions, only: [ :index, :show ]
     end
   end
 
