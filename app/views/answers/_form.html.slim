@@ -1,14 +1,14 @@
-- if can?(:create, Answer)
 div class="answer-form"
   = form_for [@question, @answer], remote: true do |f|
     = f.label :body, 'Ответ'
     .answers-errors-form
     = f.text_area :body
-    p
-      = f.fields_for :attachments, @answer.attachments.build do |attachment|
-        .form-fields
-          = render 'attachments/fields', f: attachment
-        .links
-          = link_to_add_association 'Add file', f, :attachments,
-          partial: 'attachments/fields'
-    = f.submit 'Reply'
+    .attachments-question-form
+      p
+        = f.fields_for :attachments, @answer.attachments.build do |attachment|
+          .form-fields
+            = render 'attachments/fields', f: attachment
+          .links
+            = link_to_add_association 'Add file', f, :attachments,
+            partial: 'attachments/fields'
+      = f.submit 'Reply'

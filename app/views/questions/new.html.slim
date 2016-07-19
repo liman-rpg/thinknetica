@@ -1,21 +1,22 @@
-= form_for @question do |f|
-  p= f.label :title
-  p= f.text_field :title
-  p= f.label :body
-  p= f.text_area :body
+div class="question-form"
+  = form_for @question do |f|
+    p= f.label :title
+    p= f.text_field :title
+    p= f.label :body
+    p= f.text_area :body
 
 
-  .attachments-question-form
-    p Attachment:
-    p
-      = f.fields_for :attachments, @question.attachments.build do |attachment|
-        .form-fields
-          = render 'attachments/fields', f: attachment
-        .links
-          = link_to_add_association 'Add file', f, :attachments,
-          partial: 'attachments/fields'
+    .attachments-question-form
+      p Attachment:
+      p
+        = f.fields_for :attachments, @question.attachments.build do |attachment|
+          .form-fields
+            = render 'attachments/fields', f: attachment
+          .links
+            = link_to_add_association 'Add file', f, :attachments,
+            partial: 'attachments/fields'
 
-    p= f.submit 'Create'
+      p= f.submit 'Create'
 
 p= link_to 'Back', questions_path
 
