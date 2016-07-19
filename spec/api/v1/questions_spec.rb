@@ -100,7 +100,7 @@ describe 'Questions API' do
         end
 
         it 'contain url in file' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("question/attachments/0/file/url")
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("question/attachments/0/url")
         end
       end
     end
@@ -127,12 +127,12 @@ describe 'Questions API' do
       before { get "/api/v1/questions/#{ question.id }/answers", format: :json, access_token: access_token.token }
 
       it 'returns list of answers for question' do
-        expect(response.body).to have_json_size(3)
+        expect(response.body).to have_json_size(3).at_path('answers')
       end
       # (*1)
       %w(id body created_at updated_at).each do |attr|
         it "contains #{ attr }" do
-          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("0/#{ attr }")
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/0/#{ attr }")
         end
       end
     end

@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         get :all, on: :collection
       end
       resources :questions, only: [ :index, :show ] do
+        resources :answers, only: [ :show ], shallow: true
         get "/answers", to: 'questions#answers', on: :member
       end
     end
