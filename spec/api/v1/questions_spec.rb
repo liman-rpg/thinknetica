@@ -8,11 +8,13 @@ describe 'Questions API' do
     context 'unauthorized' do
       it 'returns 401 status if there is no access_token' do
         get '/api/v1/questions', format: :json
+
         expect(response.status).to eq 401
       end
 
       it 'returns 401 status if access_token no vailid' do
         get '/api/v1/questions', format: :json, access_token: '1234'
+
         expect(response.status).to eq 401
       end
     end
@@ -49,13 +51,16 @@ describe 'Questions API' do
   describe 'GET #show' do
     context 'unauthorized' do
       let(:question) { create(:question) }
+
       it 'returns 401 status if there is no access_token' do
         get "/api/v1/questions/#{question.id}", format: :json
+
         expect(response.status).to eq 401
       end
 
       it 'returns 401 status if access_token no vailid' do
         get "/api/v1/questions/#{question.id}", format: :json, access_token: '1234'
+
         expect(response.status).to eq 401
       end
     end
@@ -133,6 +138,75 @@ describe 'Questions API' do
       %w(id body created_at updated_at).each do |attr|
         it "contains #{ attr }" do
           expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answers/0/#{ attr }")
+        end
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    let(:question) { create(:question) }
+
+    context 'unauthorized' do
+      it 'returns 401 status if there is no access_token' do
+        post '/api/v1/questions', format: :json
+
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access_token no vailid' do
+        post '/api/v1/questions', format: :json, access_token: '1234'
+
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'authorized' do
+      context 'question with vailid params' do
+        let(:create_valid_question) { post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:question) }
+        let(:question_last) { Question.last }
+
+        it 'save in database' do
+          expect{ create_valid_question }.to change(Question, :count).by(1)
+        end
+
+        context 'after create' do
+          before { create_valid_question }
+
+          it 'returns 201 status' do
+            expect(response).to be_success
+          end
+
+          %w(id title body created_at updated_at).each do |attr|
+            it "contains #{ attr }" do
+              create_valid_question
+              expect(response.body).to be_json_eql(question_last.send(attr.to_sym).to_json).at_path("question/#{ attr }")
+            end
+          end
+
+          it 'check attributes' do
+            question_last.reload
+
+            expect(question_last.title).to eq question_last[:title]
+            expect(question_last.body).to eq "MyText"
+            expect(question_last.user_id).to eq user.id
+          end
+        end
+      end
+
+      context 'question with invailid params' do
+        let(:create_invalid_question) { post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:invalid_question) }
+        let(:question_last) { Question.last }
+
+        it 'not save in database' do
+          expect{ create_invalid_question }.to_not change(Question, :count)
+        end
+
+        context 'after create' do
+          before { create_invalid_question }
+
+          it 'returns 422 status' do
+            expect(response.status).to eq 422
+          end
         end
       end
     end
