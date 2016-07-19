@@ -18,7 +18,8 @@ p= render 'votes/votes', votable: @question
   div class='question_#{ @question.id }'
     .comments-question-list
       = render @question.comments.order(created_at: :asc)
-  = render 'comments/form', commentable: @question
+  - if can?(:create, Comment)
+    = render 'comments/form', commentable: @question
 
 
 - if can?(:modify, @question)

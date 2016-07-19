@@ -1,8 +1,9 @@
 .question
   = render 'question'
 
-.form-group
-  = render 'answers/form'
+- if can?(:create, Answer)
+  .form-group
+    = render 'answers/form'
 
 .answers
   = render @answers
