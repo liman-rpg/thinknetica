@@ -7,16 +7,14 @@ describe 'Answer API' do
 
   describe 'GET #show' do
     context 'unauthorized' do
-      let(:answer) { create(:answer) }
-
       it 'returns 401 status if there is no access_token' do
-        get "/api/v1//answers/#{ answer.id }", format: :json
+        get "/api/v1//answers/1", format: :json
 
         expect(response.status).to eq 401
       end
 
       it 'returns 401 status if access_token no vailid' do
-        get "/api/v1//answers/#{ answer.id }", format: :json, access_token: '1234'
+        get "/api/v1//answers/1", format: :json, access_token: '1234'
 
         expect(response.status).to eq 401
       end
