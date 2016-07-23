@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 describe 'Answer API' do
-  let(:user) { create(:user) }
+  let(:user)         { create(:user) }
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
+  let(:question)     { create(:question) }
 
   describe 'GET #show' do
     context 'unauthorized' do
-      let(:question) { create(:question) }
       let(:answer) { create(:answer) }
 
       it 'returns 401 status if there is no access_token' do
@@ -24,9 +24,8 @@ describe 'Answer API' do
 
     context 'authorized' do
       let!(:answer)     { create(:answer, :with_attachment) }
-      let!(:attachment) { create(:attachment, attachable: answer) }
+      let(:attachment)  { answer.attachments.first }
       let!(:comment)    { create(:comment, commentable: answer) }
-
 
       before { get "/api/v1//answers/#{ answer.id }", format: :json, access_token: access_token.token }
 
@@ -53,14 +52,9 @@ describe 'Answer API' do
       end
 
       context 'attachment' do
-        # it 'included in answer object' do
-        #   expect(response.body).to have_json_size(1).at_path('attachments')
-        # end
-        # ---->
-        # Answer API GET #show authorized attachment included in answer object
-        # Failure/Error: expect(response.body).to have_json_size(1).at_path('attachments')
-        # Expected JSON value size to be 1, got 2 at path "attachments"
-        #  ./spec/api/v1/answers_spec.rb:55:in `block (5 levels) in <top (required)>'
+        it 'included in answer object' do
+          expect(response.body).to have_json_size(1).at_path('attachments')
+        end
 
         it 'contain id' do
           expect(response.body).to be_json_eql(attachment.id.to_json).at_path("attachments/0/id")
@@ -74,7 +68,6 @@ describe 'Answer API' do
   end
 
   describe 'POST #create' do
-    let(:question) { create(:question) }
     let(:answer) { create(:answer, question: question) }
 
     context 'unauthorized' do
