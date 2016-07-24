@@ -33,33 +33,33 @@ describe 'Answer API' do
 
       %w(id body created_at updated_at).each do |attr|
         it "contains #{ attr }" do
-          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("#{ attr }")
+          expect(response.body).to be_json_eql(answer.send(attr.to_sym).to_json).at_path("answer/#{ attr }")
         end
       end
 
       context 'comments' do
         it 'included in answer object' do
-          expect(response.body).to have_json_size(1).at_path("comments")
+          expect(response.body).to have_json_size(1).at_path("answer/comments")
         end
 
         %w(id body created_at updated_at).each do |attr|
           it "contains #{ attr }" do
-            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("comments/0/#{ attr }")
+            expect(response.body).to be_json_eql(comment.send(attr.to_sym).to_json).at_path("answer/comments/0/#{ attr }")
           end
         end
       end
 
       context 'attachment' do
         it 'included in answer object' do
-          expect(response.body).to have_json_size(1).at_path('attachments')
+          expect(response.body).to have_json_size(1).at_path('answer/attachments')
         end
 
         it 'contain id' do
-          expect(response.body).to be_json_eql(attachment.id.to_json).at_path("attachments/0/id")
+          expect(response.body).to be_json_eql(attachment.id.to_json).at_path("answer/attachments/0/id")
         end
 
         it 'contain url in file' do
-          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("attachments/0/url")
+          expect(response.body).to be_json_eql(attachment.file.url.to_json).at_path("answer/attachments/0/url")
         end
       end
     end
@@ -100,7 +100,7 @@ describe 'Answer API' do
 
           %w(id body created_at updated_at).each do |attr|
             it "contains #{ attr }" do
-              expect(response.body).to be_json_eql(answer_last.send(attr.to_sym).to_json).at_path("#{ attr }")
+              expect(response.body).to be_json_eql(answer_last.send(attr.to_sym).to_json).at_path("answer/#{ attr }")
             end
           end
 
