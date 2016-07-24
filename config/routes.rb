@@ -30,6 +30,10 @@ Rails.application.routes.draw do
         get :me, on: :collection
         get :all, on: :collection
       end
+      resources :questions, only: [ :index, :show, :create ] do
+        resources :answers, only: [ :show, :create ], shallow: true
+        get "/answers", to: 'questions#answers', on: :member
+      end
     end
   end
 

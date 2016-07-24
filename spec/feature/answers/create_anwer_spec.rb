@@ -40,10 +40,7 @@ feature 'Create answer', %q{
 
   scenario 'Unauthenticate user try create answer' do
     visit question_path(question)
-    fill_in 'Ответ', with: 'BodyTestAnswer'
-    click_on 'Reply'
 
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
-    expect(current_path).to eq new_user_session_path
+    expect(page).to_not have_selector 'textarea#answer_body'
   end
 end

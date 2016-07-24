@@ -9,6 +9,7 @@ class CommentsController < ApplicationController
   authorize_resource
 
   def create
+    authorize! :create, Comment
     respond_with(@comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id)))
   end
 
