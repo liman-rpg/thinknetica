@@ -5,19 +5,7 @@ describe 'Questions API' do
   let(:access_token) { create(:access_token, resource_owner_id: user.id) }
 
   describe 'GET #index' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/questions', format: :json
-
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        get '/api/v1/questions', format: :json, access_token: '1234'
-
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:questions)   { create_list(:question, 3) }
@@ -46,24 +34,16 @@ describe 'Questions API' do
         expect(response.body).to be_json_eql(question.title.truncate(10).to_json).at_path("questions/0/short_title")
       end
     end
+
+    def do_request(options = {})
+      get '/api/v1/questions', { format: :json }.merge(options)
+    end
   end
 
   describe 'GET #show' do
-    context 'unauthorized' do
-      let(:question) { create(:question) }
+    let(:question) { create(:question) }
 
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1/questions/#{question.id}", format: :json
-
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        get "/api/v1/questions/#{question.id}", format: :json, access_token: '1234'
-
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:question)  { create(:question, :with_attachment) }
@@ -109,20 +89,14 @@ describe 'Questions API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get "/api/v1/questions/#{question.id}", { format: :json }.merge(options)
+    end
   end
 
   describe 'GET #answer' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/questions/0/answers', format: :json
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        get '/api/v1/questions/0/answers', format: :json, access_token: '1234'
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:question) { create(:question) }
@@ -141,24 +115,16 @@ describe 'Questions API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get '/api/v1/questions/0/answers', { format: :json }.merge(options)
+    end
   end
 
   describe 'POST #create' do
     let(:question) { create(:question) }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        post '/api/v1/questions', format: :json
-
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        post '/api/v1/questions', format: :json, access_token: '1234'
-
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       context 'question with vailid params' do
@@ -209,6 +175,10 @@ describe 'Questions API' do
           end
         end
       end
+    end
+
+    def do_request(options = {})
+      post '/api/v1/questions', { format: :json }.merge(options)
     end
   end
 end
