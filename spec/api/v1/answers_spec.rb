@@ -64,7 +64,7 @@ describe 'Answer API' do
 
     context 'authorized' do
       context 'with vailid params' do
-        let(:create_valid_answer) { post "/api/v1/questions/#{ question.id }/answers", format: :json, question_id: question.id, access_token: access_token.token, answer: attributes_for(:answer) }
+        let(:create_valid_answer) { do_request(question_id: question.id, access_token: access_token.token, answer: attributes_for(:answer)) }
         let(:answer_last) { Answer.last }
 
         it 'save in database' do
@@ -94,7 +94,7 @@ describe 'Answer API' do
       end
 
       context 'question with invailid params' do
-        let(:create_invalid_answer) { post "/api/v1/questions/#{ question.id }/answers", format: :json, question_id: question.id, access_token: access_token.token, answer: attributes_for(:invalid_answer) }
+        let(:create_invalid_answer) { do_request(question_id: question.id, access_token: access_token.token, answer: attributes_for(:invalid_answer)) }
 
         it 'not save in database' do
           expect{ create_invalid_answer }.to_not change(Answer, :count)

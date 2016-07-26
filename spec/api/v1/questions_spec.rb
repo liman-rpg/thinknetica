@@ -12,7 +12,7 @@ describe 'Questions API' do
       let(:question)     { questions.first }
       let!(:answer)      { create(:answer, question: question) }
 
-      before { get '/api/v1/questions', format: :json, access_token: access_token.token }
+      before { do_request(access_token: access_token.token) }
 
       it 'returns 200 status' do
         expect(response).to be_success
@@ -50,7 +50,7 @@ describe 'Questions API' do
       let(:attachment) { question.attachments.first }
       let!(:comment)   { create(:comment, commentable: question) }
 
-      before { get "/api/v1/questions/#{ question.id }", format: :json, access_token: access_token.token }
+      before { do_request(access_token: access_token.token) }
 
       it 'returns 200 status' do
         expect(response).to be_success
@@ -128,7 +128,7 @@ describe 'Questions API' do
 
     context 'authorized' do
       context 'question with vailid params' do
-        let(:create_valid_question) { post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:question) }
+        let(:create_valid_question) { do_request(access_token: access_token.token, question: attributes_for(:question)) }
         let(:question_last) { Question.last }
 
         it 'save in database' do
@@ -160,7 +160,7 @@ describe 'Questions API' do
       end
 
       context 'question with invailid params' do
-        let(:create_invalid_question) { post '/api/v1/questions', format: :json, access_token: access_token.token, question: attributes_for(:invalid_question) }
+        let(:create_invalid_question) { do_request(access_token: access_token.token, question: attributes_for(:invalid_question)) }
         let(:question_last) { Question.last }
 
         it 'not save in database' do
