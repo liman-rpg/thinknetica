@@ -6,19 +6,7 @@ describe 'Answer API' do
   let(:question)     { create(:question) }
 
   describe 'GET #show' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get "/api/v1//answers/1", format: :json
-
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        get "/api/v1//answers/1", format: :json, access_token: '1234'
-
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       let!(:answer)     { create(:answer, :with_attachment) }
@@ -63,28 +51,20 @@ describe 'Answer API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get "/api/v1//answers/1", { format: :json }.merge(options)
+    end
   end
 
   describe 'POST #create' do
     let(:answer) { create(:answer, question: question) }
 
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        post "/api/v1/questions/#{ question.id }/answers", format: :json
-
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token no vailid' do
-        post "/api/v1/questions/#{ question.id }/answers", format: :json, access_token: '1234'
-
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like "API Authenticable"
 
     context 'authorized' do
       context 'with vailid params' do
-        let(:create_valid_answer) { post "/api/v1/questions/#{ question.id }/answers", format: :json, question_id: question.id, access_token: access_token.token, answer: attributes_for(:answer) }
+        let(:create_valid_answer) { do_request(question_id: question.id, access_token: access_token.token, answer: attributes_for(:answer)) }
         let(:answer_last) { Answer.last }
 
         it 'save in database' do
@@ -114,7 +94,7 @@ describe 'Answer API' do
       end
 
       context 'question with invailid params' do
-        let(:create_invalid_answer) { post "/api/v1/questions/#{ question.id }/answers", format: :json, question_id: question.id, access_token: access_token.token, answer: attributes_for(:invalid_answer) }
+        let(:create_invalid_answer) { do_request(question_id: question.id, access_token: access_token.token, answer: attributes_for(:invalid_answer)) }
 
         it 'not save in database' do
           expect{ create_invalid_answer }.to_not change(Answer, :count)
@@ -128,6 +108,10 @@ describe 'Answer API' do
           end
         end
       end
+    end
+
+    def do_request(options = {})
+      post "/api/v1/questions/#{ question.id }/answers", { format: :json }.merge(options)
     end
   end
 end

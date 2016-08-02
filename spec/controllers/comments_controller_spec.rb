@@ -18,7 +18,7 @@ RSpec.describe CommentsController, type: :controller do
           expect { create_comment }.to change(@user.comments, :count).by(+1)
         end
 
-        it 'Create @question.to_json after create question ' do
+        it 'Create @comment.to_json after create comment for questions' do
           expect(PrivatePub).to receive(:publish_to).with('/comments', anything)
 
           create_comment
@@ -38,7 +38,7 @@ RSpec.describe CommentsController, type: :controller do
         expect { create_invalid_comment }.to_not change(question.comments, :count)
       end
 
-      it "Don't create @question.to_json after create question" do
+      it "Don't create @comment.to_json after create comment for questions" do
         expect(PrivatePub).to_not receive(:publish_to).with('/comments', anything)
 
         create_invalid_comment
@@ -62,7 +62,7 @@ RSpec.describe CommentsController, type: :controller do
           expect { create_comment }.to change(@user.comments, :count).by(+1)
         end
 
-        it 'Create @answer.to_json after create question ' do
+        it 'Create @comment.to_json after create comment for answer' do
           expect(PrivatePub).to receive(:publish_to).with('/comments', anything)
 
           create_comment
@@ -82,7 +82,7 @@ RSpec.describe CommentsController, type: :controller do
         expect { create_invalid_comment }.to_not change(answer.comments, :count)
       end
 
-      it "Don't create @question.to_json after create question" do
+      it "Don't create @comment.to_json after create comment for answer" do
         expect(PrivatePub).to_not receive(:publish_to).with('/comments', anything)
 
         create_invalid_comment
