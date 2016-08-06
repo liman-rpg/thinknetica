@@ -24,6 +24,9 @@ Rails.application.routes.draw do
     resources :answers , shallow: true , concerns: :votable do
       resources :comments, only: :create, defaults: { commentable: 'answers' }
     end
+    member do
+      resources :subscriptions, only: :create, defaults: { subscriptable: 'questions'}
+    end
   end
 
   resources :attachments, only: :destroy
