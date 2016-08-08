@@ -5,7 +5,6 @@ module Subscriptable
     has_many :subscriptions, as: :subscriptable, dependent: :destroy
 
     after_create :create_subscription
-    # after_commit :create_subscription, on: :create
 
     private
 

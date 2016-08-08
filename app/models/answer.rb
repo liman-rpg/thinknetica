@@ -12,10 +12,19 @@ class Answer < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  after_commit :mail_notice, on: :create
+
   def set_as_best!
     transaction do
       question.answers.update_all(best: false)
       self.update!(best: true)
+    end
+  end
+
+  def mail_notice
+    @question = self.question
+    @question.subscriptions.each do |subscription|
+      QuestionNotification.delay.send_question_notice(@question, subscription.user)
     end
   end
 end
