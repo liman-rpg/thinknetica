@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       resources :comments, only: :create, defaults: { commentable: 'answers' }
     end
     member do
-      resources :subscriptions, only: :create, defaults: { subscriptable: 'questions'}
+      resources :subscriptions, only: [:create, :destroy], defaults: { subscriptable: 'questions'}
     end
   end
 
