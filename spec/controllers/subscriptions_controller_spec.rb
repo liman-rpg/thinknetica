@@ -4,7 +4,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   sign_in_user
 
   describe 'POST #create' do
-    let(:question)            { create(:question) }
+    let!(:question)            { create(:question) }
     let(:create_subscription) { post :create, id: question.id, subscriptable: 'Question', format: :js }
 
     context 'with valid attributes' do
