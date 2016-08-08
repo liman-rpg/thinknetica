@@ -7,6 +7,10 @@ p= @question.body
 
 p= render 'votes/votes', votable: @question
 
+.subscription
+  - if user_signed_in?
+    = render 'subscriptions/link', subscription: @question
+
 .attachments-question
   p Attachment:
   ul
