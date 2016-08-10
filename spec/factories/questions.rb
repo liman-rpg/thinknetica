@@ -15,4 +15,9 @@ FactoryGirl.define do
     title nil
     body nil
   end
+
+  factory :old_question, class:"Question" do
+     title 'Old question'
+     created_at Time.zone.now - 2.days
+  end
 end

@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe QuestionNotification, type: :mailer do
   describe "send_question_notice" do
-    let(:user) { create(:user) }
+    let(:user)      { create(:user) }
     let!(:question) { create(:question, user: user) }
-    let(:answer) { create(:answer, question: question)}
-    let(:mail) { QuestionNotification.send_question_notice(question, user) }
+    let(:answer)    { create(:answer, question: question)}
+    let(:mail)      { QuestionNotification.send_question_notice(question, user) }
 
     it "renders the headers" do
       expect(mail.subject).to eq('New answer(s) to your subscription!')

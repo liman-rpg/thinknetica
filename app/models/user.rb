@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   end
 
   def self.send_daily_digest
+    # questions_yesterday = Question.yesterday.to_a
     find_each.each do |user|
       DailyMailer.delay.digest(user)
     end

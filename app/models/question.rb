@@ -7,6 +7,8 @@ class Question < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   belongs_to :user
 
+  scope :yesterday, -> { where(created_at: Time.zone.now.yesterday.all_day) }
+
   validates :title, :body, :user_id , presence: true
   validates :title, :body, length: { minimum: 5 }
 

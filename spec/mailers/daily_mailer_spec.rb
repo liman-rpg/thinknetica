@@ -13,24 +13,24 @@ RSpec.describe DailyMailer, type: :mailer do
       end
 
       it "the body" do
-        expect(mail.body.encoded).to match("Hi")
+        expect(mail.body.encoded).to match("Hello")
       end
     end
 
     context 'mailer body' do
-      let!(:questions)    { create_list(:question, 2) }
-      let!(:old_question) { create(:question, title: 'Old question', created_at: Time.now - 1.days) }
+      let!(:questions)    { create_list(:question, 2, created_at: Time.zone.now.yesterday) }
+      let!(:old_question) { create(:question, attributes_for(:old_question)) }
 
       it 'have valid questions list' do
         questions.each do |question|
           expect(mail.body).to have_content question.title
-          expect(mail.body).to have_link("#{ question.title}", href: question_url(question))
+          expect(mail.body).to have_link( question.title, href: question_url(question))
         end
       end
 
       it 'have invalid questions list' do
         expect(mail.body).to_not have_content old_question.title
-        expect(mail.body).to_not have_link("#{ old_question.title}", href: question_url(old_question))
+        expect(mail.body).to_not have_link( old_question.title, href: question_url(old_question))
       end
     end
   end

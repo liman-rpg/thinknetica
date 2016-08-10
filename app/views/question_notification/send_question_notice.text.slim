@@ -1,6 +1,12 @@
-| Hello
-.list
-  h1 You have new answer(s) on your subscription:
-br
-= link_to 'check', question_url(@question)
-| You can unsubscribe on the question page
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type"
+  body
+    h1 Hello
+    .list
+      p You have new answer(s) on your subscription:
+    br
+    = link_to 'check', question_url(@question)
+    br
+    | You can unsubscribe on the question page
