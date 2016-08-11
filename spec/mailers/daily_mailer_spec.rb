@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe DailyMailer, type: :mailer do
   describe "digest" do
     let(:user) { create(:user) }
-    let(:mail) { DailyMailer.digest(user) }
+    let!(:questions_yesterday) { create_list(:question, 2, created_at: Time.zone.now.yesterday)}
+    let(:mail) { DailyMailer.digest(user, questions_yesterday) }
 
     context 'renders' do
       it "the headers" do
@@ -18,11 +19,11 @@ RSpec.describe DailyMailer, type: :mailer do
     end
 
     context 'mailer body' do
-      let!(:questions)    { create_list(:question, 2, created_at: Time.zone.now.yesterday) }
+      # let!(:questions)    { create_list(:question, 2, created_at: Time.zone.now.yesterday) }
       let!(:old_question) { create(:question, attributes_for(:old_question)) }
 
       it 'have valid questions list' do
-        questions.each do |question|
+        questions_yesterday.each do |question|
           expect(mail.body).to have_content question.title
           expect(mail.body).to have_link( question.title, href: question_url(question))
         end
