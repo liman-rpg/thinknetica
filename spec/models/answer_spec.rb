@@ -18,4 +18,15 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :attachments }
 
   it_behaves_like 'votable'
+
+  describe '.mail_notice' do
+    let(:user)     { create(:user) }
+    let(:question) { create(:question, user: user) }
+    let(:answer)   { create(:answer, question: question) }
+
+    it "should send mail_notice after create answer" do
+      answer
+      answer.mail_notice
+    end
+  end
 end

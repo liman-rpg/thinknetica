@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type"
+  body
+    h1 Hello
+    .list
+      p A list of questions for the day:
+    br
+    .questions_list
+      - @questions.each do |question|
+        = link_to "#{question.title}", question_url(question)
