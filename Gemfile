@@ -34,7 +34,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim-rails'
 gem 'devise'
-gem 'bootstrap'
+gem 'bootstrap-sass'
 gem 'pry-byebug'
 gem 'carrierwave'
 gem 'remotipart'
