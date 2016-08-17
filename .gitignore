@@ -15,3 +15,9 @@
 /public/spec
 
 config/database.yml
+
+
+#sphinx
+dump.rdb
+config/*.sphinx.conf
+db/sphinx

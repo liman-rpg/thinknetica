@@ -55,6 +55,9 @@ gem 'whenever'
 gem 'sidekiq'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'sidetiq'
+gem 'mysql2', '~> 0.4.4'
+gem 'thinking-sphinx'
+gem 'sprockets', '3.6.3'
 
 group :test do
   gem 'shoulda-matchers'
