@@ -22,21 +22,14 @@ html
                 = link_to 'Sign in', new_user_session_path
 
             li.pull-left
-              form.navbar-form role="search"
+              = form_tag search_path, method: :get, class: 'navbar-form' do
                 .input-group
                   .form-group
-                    input#search.form-control placeholder="Поиск" type="text"
-
-                  span.input-group
-                    select.form-control name="search_by"
-                      option selected="" value="anywhere" anywhere
-                      option value="users" users
-                      option value="questions" questions
-                      option value="answers" answers
-                      option value="comments" comments
-
-                  span.input-group-btn
-                    button.btn.btn-default type="submit"  Find
+                    = text_field_tag :query, '', id: 'search', class: 'form-control'
+                  .form-select
+                    = select_tag(:search_type, options_for_select(SearchController::SEARCH_OPTION, 1), class: 'form-control' )
+                  .form-btn
+                    = submit_tag 'Find', class: 'form-control'
     div
       = notice
     div
