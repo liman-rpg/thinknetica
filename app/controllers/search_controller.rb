@@ -1,20 +1,29 @@
 class SearchController < ApplicationController
-  SEARCH = %w{ anywhere, users, questions, answers, comments }
+  SEARCH_OPTION = [['anywhere', 'anywhere'],
+                   ['users', 'users'],
+                   ['questions', 'questions'],
+                   ['answers', 'answers'],
+                   ['comments', 'comments']]
 
   def find
-    if query == 'anywhere'
-      @content = ThinkingSphinx.search params[:query]
-    elsif query
-      @content = query.classify.constantize.search params[:query]
+    if options == 'anywhere' && !params[:query].empty?
+      @content = ThinkingSphinx.search query
+    elsif options && !params[:query].empty?
+      @content = options.classify.constantize.search query
     else
       redirect_to root_url
+      # @content = ''
     end
   end
 
   private
 
+  def options
+    options_for_select = %{ anywhere, users, questions, answers, comments }
+    options_for_select.include?(params[:search_type]) ? params[:search_type] : nil
+  end
+
   def query
-    search_type = SEARCH
-    search_type.include?(params[:search_type]) ? params[:search_type] : nil
+    ThinkingSphinx::Query.escape(params[:query])
   end
 end
