@@ -31,8 +31,8 @@ html
                       = select_tag(:search_type, options_for_select(SearchController::SEARCH_OPTION, 1), class: 'form-control' )
                     .form-btn
                       = submit_tag 'Find', class: 'form-control'
-    div
+    div.notice
       = notice
-    div
+    div.alert
       = alert
     = yield
