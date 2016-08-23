@@ -1,0 +1,8 @@
+p
+  | Body: #{item.body}
+p
+  | Author: #{item.user.email}
+p
+  | Принадлежит ответу
+  = link_to " #{item.question.title}", question_path(item.question), method: :get
+br

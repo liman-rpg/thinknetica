@@ -1,0 +1,11 @@
+development:
+  address: 127.0.0.1
+  port: 9312
+  utf8: true
+  morphology: stem_ru
+
+test:
+  address: 127.0.0.1
+  port: 9307
+  utf8: true
+  morphology: stem_ru

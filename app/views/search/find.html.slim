@@ -1,0 +1,6 @@
+- if @content.empty?
+  p
+    | Search No results!
+- else
+  - @content.each do |item|
+    = render partial: "search/#{item.class.to_s.downcase}", locals: { item: item }

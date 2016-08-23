@@ -5,8 +5,8 @@
 ready = ->
   $('.edit-answer-link').click (e) ->
     e.preventDefault();
-    $(this).hide();
     answer_id = $(this).data('answerId')
+    $(this).hide();
     $('form#edit-answer-' + answer_id).show()
 
   $('.answers .votes_link a').bind 'ajax:success', (e, data, status, xhr) ->

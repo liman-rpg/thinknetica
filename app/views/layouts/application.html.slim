@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title Proj
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    = Gon::Base.render_data
+  body
+    nav.navbar.navbar-default
+      .navbar-inner
+        .container
+          .navbar-header
+            = link_to 'Thinknetica!', root_path, class: 'navbar-brand'
+          ul.nav.navbar-nav.pull-left
+            li.active
+              - if user_signed_in?
+                = link_to 'Log out', destroy_user_session_path, method: :delete
+                span
+                  p Email: #{ current_user.email }
+              - else
+                = link_to 'Sign in', new_user_session_path
+
+            li.pull-left
+              .search
+                = form_tag search_path, method: :get, class: 'navbar-form' do
+                  .input-group
+                    .form-group
+                      = text_field_tag :query, '', id: 'search', class: 'form-control'
+                    .form-select
+                      = select_tag(:search_type, options_for_select(SearchController::SEARCH_OPTION, 1), class: 'form-control' )
+                    .form-btn
+                      = submit_tag 'Find', class: 'form-control'
+    div.notice
+      = notice
+    div.alert
+      = alert
+    = yield
