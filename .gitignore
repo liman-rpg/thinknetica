@@ -15,6 +15,7 @@
 /public/spec
 
 config/database.yml
+config/private_pub.yml
 
 
 #sphinx
