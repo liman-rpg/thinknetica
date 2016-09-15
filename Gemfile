@@ -58,6 +58,8 @@ gem 'sidetiq'
 gem 'mysql2', '~> 0.4.4'
 gem 'thinking-sphinx', '~> 3.1.1'
 gem 'sprockets', '3.6.3'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 group :test do
   gem 'shoulda-matchers'
@@ -83,5 +85,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
 end
 
