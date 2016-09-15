@@ -60,6 +60,7 @@ gem 'thinking-sphinx', '~> 3.1.1'
 gem 'sprockets', '3.6.3'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 group :test do
   gem 'shoulda-matchers'
