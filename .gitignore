@@ -22,3 +22,4 @@ config/private_pub.yml
 dump.rdb
 config/*.sphinx.conf
 db/sphinx
+config/sphinx.yml
