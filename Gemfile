@@ -61,6 +61,8 @@ gem 'sprockets', '3.6.3'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
+gem 'unicorn'
+
 
 group :test do
   gem 'shoulda-matchers'
@@ -91,5 +93,6 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
