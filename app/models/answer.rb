@@ -1,7 +1,7 @@
 class Answer < ActiveRecord::Base
   include Votable
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :user
   has_many :attachments , as: :attachable, dependent: :destroy
   has_many :comments , as: :commentable, dependent: :destroy
