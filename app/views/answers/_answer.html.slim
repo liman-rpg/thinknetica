@@ -1,6 +1,7 @@
 div class="answer" id="answer-id-#{ answer.id }"
-  p= answer.user.email
-  p= answer.body
+  - cache_unless current_user.try(:admin), ['answer_body', user_signed_in?, answer] do
+    p= answer.user.email
+    p= answer.body
 
   p= render 'votes/votes', votable: answer
 

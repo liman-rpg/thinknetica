@@ -1,12 +1,13 @@
-.question
-  = render 'question'
+- cache @question do
+  .question
+    = render 'question'
 
-- if can?(:create, Answer)
-  .form-group
-    = render 'answers/form'
+  - if can?(:create, Answer)
+    .form-group
+      = render 'answers/form'
 
-.answers
-  = render @answers
+  .answers
+    = render @answers
 
 p= link_to 'Back', questions_path
 
